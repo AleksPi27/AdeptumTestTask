@@ -1,10 +1,28 @@
-import { Resolver, Query } from 'type-graphql'
-import { Book } from '../entities/Book'
+import 'reflect-metadata'
+import {Resolver, Query, FieldResolver, Root, Mutation, Arg} from 'type-graphql'
+import {Book} from '../entities/Book'
+import {Inject, Service} from 'typedi'
+import {BookService} from '../services/BookService'
+import {Author} from '../entities/Author'
+import {CreateBookInput} from '../inputs/CreateBookInput'
 
-@Resolver()
-export class BookResolver {
+@Service()
+@Resolver(() => Book)
+export default class BookResolver {
+    constructor(private bookService: BookService) {}
+
     @Query(() => [Book])
-    books() {
-        return Book.find()
+    async books(): Promise<Book[]> {
+        return await this.bookService.getAllBooks()
+    }
+
+    @Mutation(() => Book)
+    async createBook(@Arg('data') data: CreateBookInput) {
+       return await this.bookService.createAndSaveBook(data)
+    }
+
+    @FieldResolver(() => Author)
+    async author(@Root() book: Book) {
+        return await this.bookService.getBooksAuthor(book)
     }
 }

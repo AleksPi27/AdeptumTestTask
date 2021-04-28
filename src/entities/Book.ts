@@ -1,10 +1,11 @@
+import 'reflect-metadata'
 import {Entity, BaseEntity, PrimaryGeneratedColumn, Column, JoinColumn, ManyToOne} from 'typeorm'
 import { Author } from './Author'
-import { ObjectType, Field, ID } from 'type-graphql'
+import {ObjectType, Field, ID, Int} from 'type-graphql'
 
 @Entity()
-@ObjectType()
-export class Book extends BaseEntity {
+@ObjectType('Book')
+export class Book {
     @Field(() => ID)
     @PrimaryGeneratedColumn()
     bookId: number
@@ -13,15 +14,15 @@ export class Book extends BaseEntity {
     @Column()
     name: string
 
-    @Field(() => Number)
+    @Field(() => Int)
     @Column()
     pageCount: number
 
-    @Field(() => Number)
+    @Field(() => Int)
     @Column({ nullable: true })
     authorId: number
 
-    @Field(() => Author)
+    @Field(type => Author)
     @ManyToOne(() => Author, author => author.authorId)
     @JoinColumn()
     author: Author
