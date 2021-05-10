@@ -1,8 +1,8 @@
 import { BookEntity } from "../../entities";
-import { AuthorsIds, BooksIds } from "../common.types";
+import {AuthorsIds, BooksIds, CategoriesIds, PublishersIds} from '../common.types';
 import { AbstractQueryBuilder, AnySelectQueryBuilder } from "./utils";
 
-export type FindBooksByParams = Partial<BooksIds> & Partial<AuthorsIds>;
+export type FindBooksByParams = Partial<BooksIds> & Partial<AuthorsIds> & Partial<PublishersIds> & Partial<CategoriesIds>;
 
 export class BooksQB extends AbstractQueryBuilder<BookEntity> {
   constructor(alias = "books", qb?: AnySelectQueryBuilder) {
@@ -12,7 +12,7 @@ export class BooksQB extends AbstractQueryBuilder<BookEntity> {
   findBy(params: FindBooksByParams) {
     const qb = this.qb;
 
-    const { booksIds, authorsIds } = params;
+    const { booksIds, authorsIds, publishersIds, categoriesIds } = params;
 
     if (booksIds) {
       qb.andWhere(`${this.alias}.bookId IN (:...booksIds)`, {
@@ -23,6 +23,18 @@ export class BooksQB extends AbstractQueryBuilder<BookEntity> {
     if (authorsIds) {
       qb.andWhere(`${this.alias}.authorId IN (:...authorsIds)`, {
         authorsIds,
+      });
+    }
+
+    if (publishersIds) {
+      qb.andWhere(`${this.alias}.publisherId IN (:...publishersIds)`, {
+        publishersIds,
+      });
+    }
+
+    if (categoriesIds) {
+      qb.andWhere(`${this.alias}.categoryId IN (:...categoriesIds)`, {
+        categoriesIds,
       });
     }
 

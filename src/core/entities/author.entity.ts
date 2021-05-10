@@ -12,7 +12,23 @@ export class AuthorFields {
   @Column("varchar", {
     comment: "Имя автора",
   })
-  name: string;
+  firstName: string;
+
+  @Field({
+    description: "Фамилия автора",
+  })
+  @Column("varchar", {
+    comment: "Фамилия автора",
+  })
+  lastName: string;
+
+  @Field({
+    description: "Дата рождения автора",
+  })
+  @Column("datetime", {
+    comment: "Дата рождения автора",
+  })
+  birthDate: Date;
 }
 
 @Entity({ name: "authors" })

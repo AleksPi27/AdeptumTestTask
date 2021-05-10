@@ -1,9 +1,9 @@
 {
   "type": "mysql",
   "host": "localhost",
-  "port": 33060,
-  "username": "root",
-  "password": "example",
+  "port": 3306,
+  "username": "node",
+  "password": "password",
   "database": "books",
   "entities": ["./src/core/entities/*.ts"],
   "synchronize": true

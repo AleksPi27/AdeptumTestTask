@@ -40,8 +40,7 @@ class GqFindAuthorInput {
 @Resolver(() => GqAuthor)
 export class AuthorResolver {
   constructor(
-    private authorService: AuthorService,
-    private bookService: BookService
+    private authorService: AuthorService
   ) {}
 
   @Query(() => [GqAuthor], {
@@ -63,7 +62,7 @@ export class AuthorResolver {
   @Mutation(() => GqAuthor, {
     description: "Создать автора",
   })
-  createAuthor(@Arg("input") input: GqCreateAuthorInput): Promise<GqAuthor> {
+  saveAuthor(@Arg("input") input: GqCreateAuthorInput): Promise<GqAuthor> {
     return this.authorService.save(input);
   }
 

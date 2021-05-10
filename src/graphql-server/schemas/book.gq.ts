@@ -12,11 +12,13 @@ import {
   FieldResolver,
   Root,
   Ctx,
-} from "type-graphql";
-import { BookEntity, BookFields } from "../../core/entities/book.entity";
+} from 'type-graphql';
+import {BookEntity, BookFields } from '../../core/entities/book.entity';
 import { BookService } from "../../core/services/book.service";
 import { DataLoadersContext } from "../data-loaders";
 import { GqAuthor } from "./author.gq";
+import {GqPublisher} from './publisher.gq'
+import {GqCategory} from './category.gq'
 
 @ObjectType({
   description: "Книга",
@@ -33,7 +35,7 @@ class GqCreateBookInput extends BookFields {}
 })
 class GqFindBookInput {
   @Field(() => [ID])
-  authorsIds: ReadonlyArray<number>;
+  booksIds: ReadonlyArray<number>;
 }
 
 @singleton()
@@ -52,8 +54,15 @@ export class BookResolver {
   @Mutation(() => GqBook, {
     description: "Создать книгу",
   })
-  async createBook(@Arg("input") input: GqCreateBookInput): Promise<GqBook> {
+  async saveBook(@Arg("input") input: GqCreateBookInput): Promise<GqBook> {
     return await this.bookService.save(input);
+  }
+
+  @Mutation(() => BookEntity, {
+    description: "Удалить книгу",
+  })
+  async dropBook(@Arg("input") input: GqFindBookInput) {
+    return await this.bookService.drop(input);
   }
 
   @FieldResolver(() => GqAuthor, {
@@ -65,5 +74,27 @@ export class BookResolver {
     @Ctx() { dataLoaders }: DataLoadersContext
   ): Promise<GqAuthor | null> {
     return dataLoaders.author.loadOrNull(book.authorId);
+  }
+
+  @FieldResolver(() => GqPublisher, {
+    description: "Автор книги",
+    nullable: true,
+  })
+  async publisher(
+      @Root() book: GqBook,
+      @Ctx() { dataLoaders }: DataLoadersContext
+  ): Promise<GqPublisher | null> {
+    return dataLoaders.publisher.loadOrNull(book.publisherId);
+  }
+
+  @FieldResolver(() => GqCategory, {
+    description: "Категория книги",
+    nullable: true,
+  })
+  async category(
+      @Root() book: GqBook,
+      @Ctx() { dataLoaders }: DataLoadersContext
+  ): Promise<GqCategory | null> {
+    return dataLoaders.category.loadOrNull(book.categoryId);
   }
 }
