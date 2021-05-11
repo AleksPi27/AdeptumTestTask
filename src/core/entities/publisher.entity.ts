@@ -2,7 +2,7 @@ import "reflect-metadata";
 import {Entity, PrimaryGeneratedColumn, Column, JoinColumn, OneToMany, ManyToMany} from 'typeorm';
 import {ObjectType, Field, ID, InputType} from 'type-graphql';
 import {CountryEntity} from './country.entity';
-import {BookType} from './enums/booktype.enum'
+import {BookType} from '../types/book.types'
 import {BookEntity} from './book.entity'
 
 @InputType({ isAbstract: true })

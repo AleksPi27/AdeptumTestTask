@@ -10,7 +10,7 @@ import { ObjectType, Field, ID, Int, InputType, registerEnumType, } from "type-g
 import { AuthorEntity } from "./author.entity";
 import {CategoryEntity} from './category.entity';
 import {PublisherEntity} from './publisher.entity';
-import {BookType} from './enums/booktype.enum'
+import {BookType} from '../types/book.types'
 
 @InputType({ isAbstract: true })
 @ObjectType({ isAbstract: true })
