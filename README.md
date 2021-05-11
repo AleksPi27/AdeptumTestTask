@@ -1,40 +1,121 @@
-query author {
-  author(input: { authorsIds: [1] }) {
-    authorId
-    name
-    books {
-      bookId
-      name
-      pageCount
-    }
+mutation createCountry {
+  saveCountry(input: { name: "USA" }) {
+    countryId
+  }
+}
+
+mutation createCategory {
+  saveCategory(input: {name: "Detective" }) {
+    categoryId
+  }
+}
+
+
+mutation createPublisher {
+  savePublisher(input: {name: "Rose", countryId: 1, type: PRINTED }) {
+    publisherId
   }
 }
 
 mutation createAuthor {
-  createAuthor(input: { name: "test" }) {
+  saveAuthor(input: { firstName: "John", lastName: "Doe", birthDate: "1982-05-10" }) {
     authorId
-    name
   }
 }
 
-query books {
-  books(input: { authorsIds: [1] }) {
+
+mutation createBook {
+  saveBook(input: { authorId: 1, publisherId: 1, name: "Exodus 2", pageCount: 666, categoryId: 1 }) {
     bookId
+  }
+}
+
+fragment bookInfo on GqBook {
+  name,
+  pageCount,
+
+  category {
     name
-    pageCount
-    authorId
+  },
+  publisher {
+    name,
+    country {
+      name
+    }
+  },
+}
+
+fragment bookInfoWithAuthor on GqBook {
+  ...bookInfo,
+  author {
+    firstName,
+    lastName,
+    birthDate
+  }
+}
+
+query getBook {
+  books(input: { booksIds: [8, 9] }) {
+    ...bookInfo,
     author {
+      firstName,
+      lastName,
+      birthDate
+    }
+  }
+}
+
+query getAuthorsBooks {
+  author(input: { authorsIds: [1] }) {
+    books {
+      name,
+      pageCount,
+      category {
+        name
+      },
+      publisher {
+        name,
+        country {
+            name
+        }
+      },
+    }
+  }
+}
+
+query getPublishersBooks {
+  publisher(input: { publishersIds: [11] }) {
+    books {
+      ...bookInfo,
+      author {
+        firstName,
+        lastName,
+        birthDate
+      }
+    }
+  }
+}
+
+query getBooksFromCategory {
+  category(input: { categoriesIds: 1 }) {
+    name,
+    books {
+      ...bookInfoWithAuthor
+    }
+  }
+}
+
+query getPublishers {
+  publisher(input: { publishersIds: [2] }) {
+    name,
+    country {
       name
     }
   }
 }
 
-mutation createBook {
-  createBook(input: { name: "test", authorId: 1, pageCount: 10 }) {
+mutation deleteBook {
+  dropBook(input: {booksIds: [3]}) {
     bookId
-    name
-    pageCount
-    authorId
   }
-}
-
+} 
