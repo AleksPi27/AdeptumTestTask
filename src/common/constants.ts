@@ -1,1 +1,1 @@
-export const SERVER_PORT: number = 3030;
+export const SERVER_PORT: number = 8080;

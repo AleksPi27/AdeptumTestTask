@@ -2,9 +2,28 @@ import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { SERVER_PORT } from "./common/constants";
 import { initGraphQLServer } from "./graphql-server";
+import dotenv from "dotenv";
+
+dotenv.config()
 
 async function main() {
-  await createConnection();
+  const type = "mysql";
+  const host = process.env.DB_HOST_NAME || "mysql";
+  const port = Number(process.env.DB_HOST_PORT) || 3306;
+  const username = process.env.DB_USER || "root";
+  const password = process.env.DB_PASSWORD || "password";
+  const database = process.env.DB_NAME || "books";
+
+  await createConnection({
+    type,
+    host,
+    port,
+    username,
+    password,
+    database,
+    entities: ["./src/core/entities/*.ts"],
+    synchronize: true
+  });
 
   const graphqlServer = await initGraphQLServer();
 
