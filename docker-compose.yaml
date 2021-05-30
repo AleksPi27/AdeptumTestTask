@@ -19,14 +19,24 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+
+  migration:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: [ "yarn", "run", "migrate" ]
+    depends_on:
+      mysqldb:
+        condition: service_healthy
+
   graphql-api:
     build:
       context: .
       dockerfile: Dockerfile
     command: ["yarn", "start"]
     depends_on:
-      mysqldb:
-        condition: service_healthy
+      - mysqldb
+      - migration
     environment:
       - "DB_USER=${DB_USER}"
       - "DB_NAME=${DB_NAME}"

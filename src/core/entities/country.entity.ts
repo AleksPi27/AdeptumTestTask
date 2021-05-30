@@ -1,7 +1,6 @@
 import "reflect-metadata";
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, ManyToMany} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
 import { ObjectType, Field, ID, InputType } from "type-graphql";
-import {PublisherEntity} from './publisher.entity';
 
 @InputType({ isAbstract: true })
 @ObjectType({ isAbstract: true })

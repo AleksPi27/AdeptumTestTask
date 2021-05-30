@@ -8,9 +8,9 @@ dotenv.config()
 
 async function main() {
   const type = "mysql";
-  const host = process.env.DB_HOST_NAME || "mysql";
+  const host = process.env.DB_HOST_NAME || "localhost";
   const port = Number(process.env.DB_HOST_PORT) || 3306;
-  const username = process.env.DB_USER || "root";
+  const username = process.env.DB_USER || "node";
   const password = process.env.DB_PASSWORD || "password";
   const database = process.env.DB_NAME || "books";
 
@@ -21,8 +21,7 @@ async function main() {
     username,
     password,
     database,
-    entities: ["./src/core/entities/*.ts"],
-    synchronize: true
+    entities: ["./src/core/entities/*.ts"]
   });
 
   const graphqlServer = await initGraphQLServer();
