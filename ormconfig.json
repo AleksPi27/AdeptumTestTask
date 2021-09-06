@@ -1,9 +1,9 @@
 {
   "type": "mysql",
-  "host": "mysqldb",
-  "port": 3306,
-  "username": "librarian",
-  "password": "P@ssw0rd",
+  "host": "127.0.0.1",
+  "port": 33306,
+  "username": "root",
+  "password": "example",
   "database": "books",
   "entities": ["./src/core/entities/*.ts"],
   "migrations": ["./migration/*.ts"],

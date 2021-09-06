@@ -1,51 +1,25 @@
-version: "2.4"
-
+version: "3.7"
 services:
-  mysqldb:
+  db:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: "${DB_NAME}"
-      MYSQL_USER: "${DB_USER}"
-      MYSQL_PASSWORD: "${DB_PASSWORD}"
-    restart: unless-stopped
-    ports:
-      - "3366:${DB_HOST_PORT}"
-    healthcheck:
-      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
-      timeout: 20s
-      retries: 10
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: books
     volumes:
-      - mysql_data:/var/lib/mysql
-
-
-  migration:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: [ "yarn", "run", "migrate" ]
-    depends_on:
-      mysqldb:
-        condition: service_healthy
-
-  graphql-api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: ["yarn", "start"]
-    depends_on:
-      - mysqldb
-      - migration
-    environment:
-      - "DB_USER=${DB_USER}"
-      - "DB_NAME=${DB_NAME}"
-      - "DB_PASSWORD=${DB_PASSWORD}"
-      - DB_HOST_NAME=mysqldb
-      - "DB_HOST_PORT=${DB_HOST_PORT}"
+      - ./docker-volumes/db/mysql:/var/lib/mysql
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql:ro
     ports:
-      - 8080:8080
-    restart: unless-stopped
+      - 33306:3306
 
-volumes:
-  mysql_data:
+  pma:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma
+    environment:
+      - PMA_HOST=db
+    restart: always
+    ports:
+      - 18080:80
+    volumes:
+      - /sessions

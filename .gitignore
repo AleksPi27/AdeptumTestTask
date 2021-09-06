@@ -8,6 +8,7 @@ npm-debug.log*
 # Dependency directories
 package-lock.json
 /node_modules
+/docker-volumes
 
 # Optional npm cache directory
 .npm
