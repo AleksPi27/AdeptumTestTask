@@ -4,13 +4,15 @@ import {
   PrimaryGeneratedColumn,
   Column,
   JoinColumn,
-  ManyToOne, ManyToMany, DeleteDateColumn,
-} from 'typeorm';
-import { ObjectType, Field, ID, Int, InputType, registerEnumType, } from "type-graphql";
+  ManyToOne,
+  ManyToMany,
+  DeleteDateColumn,
+} from "typeorm";
+import { ObjectType, Field, ID, Int, InputType } from "type-graphql";
 import { AuthorEntity } from "./author.entity";
-import {CategoryEntity} from './category.entity';
-import {PublisherEntity} from './publisher.entity';
-import {BookType} from '../types/book.types'
+import { CategoryEntity } from "./category.entity";
+import { PublisherEntity } from "./publisher.entity";
+import { BookType } from "../types/book.types";
 
 @InputType({ isAbstract: true })
 @ObjectType({ isAbstract: true })
@@ -52,14 +54,14 @@ export class BookFields {
 
   @Field(() => BookType, {
     description: "Тип книги",
-    nullable: true
+    nullable: true,
   })
   @Column({
     type: "enum",
     enum: BookType,
-    default: BookType.PRINTED
+    default: BookType.PRINTED,
   })
-  type: BookType
+  type: BookType;
 
   @Field(() => ID, {
     description: "ID издателя",

@@ -1,11 +1,11 @@
-import {registerEnumType} from 'type-graphql'
+import { registerEnumType } from "type-graphql";
 
 export enum BookType {
-    ELECTRONIC,
-    PRINTED
+  ELECTRONIC,
+  PRINTED,
 }
 
 registerEnumType(BookType, {
-    name: 'GqBookType',
-    description: 'Тип книги',
+  name: "GqBookType",
+  description: "Тип книги",
 });

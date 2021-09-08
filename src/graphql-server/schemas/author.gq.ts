@@ -14,7 +14,7 @@ import {
   Ctx,
 } from "type-graphql";
 import { AuthorEntity, AuthorFields } from "../../core/entities";
-import { AuthorService, BookService } from "../../core/services";
+import { AuthorService } from "../../core/services";
 import { DataLoadersContext } from "../data-loaders";
 import { GqBook } from "./book.gq";
 
@@ -39,9 +39,7 @@ class GqFindAuthorInput {
 @singleton()
 @Resolver(() => GqAuthor)
 export class AuthorResolver {
-  constructor(
-    private authorService: AuthorService
-  ) {}
+  constructor(private authorService: AuthorService) {}
 
   @Query(() => [GqAuthor], {
     description: "Получить список авторов",

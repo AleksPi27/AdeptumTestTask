@@ -20,10 +20,8 @@ interface JoinParams<Entity> {
 
 export abstract class AbstractQueryBuilder<Entity> {
   qb: SelectQueryBuilder<Entity>;
-  private joinMap: Map<
-    string,
-    { joinTable: string; joinType: JoinType }
-  > = new Map();
+  private joinMap: Map<string, { joinTable: string; joinType: JoinType }> =
+    new Map();
 
   protected constructor(
     readonly entity: ObjectType<Entity>,

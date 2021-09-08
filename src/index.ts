@@ -4,7 +4,7 @@ import { SERVER_PORT } from "./common/constants";
 import { initGraphQLServer } from "./graphql-server";
 import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
 async function main() {
   const type = "mysql";
@@ -21,7 +21,7 @@ async function main() {
     username,
     password,
     database,
-    entities: ["./src/core/entities/*.ts"]
+    entities: ["./src/core/entities/*.ts"],
   });
 
   const graphqlServer = await initGraphQLServer();

@@ -16,26 +16,34 @@ export const booksForAuthors: BatchLoadFn<number, BookEntity[] | null> = async (
   return mappingResultForDataLoader(authorsIds, result, "authorId", true);
 };
 
-export const booksForPublishers: BatchLoadFn<number, BookEntity[] | null> = async (
-    publishersIds: ReadonlyArray<number>
-) => {
-  const bookService = container.resolve(BookService);
+export const booksForPublishers: BatchLoadFn<number, BookEntity[] | null> =
+  async (publishersIds: ReadonlyArray<number>) => {
+    const bookService = container.resolve(BookService);
 
-  const result = await bookService.findBy({
-    publishersIds,
-  });
+    const result = await bookService.findBy({
+      publishersIds,
+    });
 
-  return mappingResultForDataLoader(publishersIds, result, "publisherId", true);
-};
+    return mappingResultForDataLoader(
+      publishersIds,
+      result,
+      "publisherId",
+      true
+    );
+  };
 
-export const booksForCategories: BatchLoadFn<number, BookEntity[] | null> = async (
-    categoriesIds: ReadonlyArray<number>
-) => {
-  const bookService = container.resolve(BookService);
+export const booksForCategories: BatchLoadFn<number, BookEntity[] | null> =
+  async (categoriesIds: ReadonlyArray<number>) => {
+    const bookService = container.resolve(BookService);
 
-  const result = await bookService.findBy({
-    categoriesIds,
-  });
+    const result = await bookService.findBy({
+      categoriesIds,
+    });
 
-  return mappingResultForDataLoader(categoriesIds, result, "categoryId", true);
-};
+    return mappingResultForDataLoader(
+      categoriesIds,
+      result,
+      "categoryId",
+      true
+    );
+  };

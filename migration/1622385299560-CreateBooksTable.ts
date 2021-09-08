@@ -1,9 +1,8 @@
-import {MigrationInterface, QueryRunner} from "typeorm";
+import { MigrationInterface, QueryRunner } from "typeorm";
 
 export class CreateBooksTable1622385299560 implements MigrationInterface {
-
-    public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`
 			CREATE TABLE books
 			(
 				name       VARCHAR(255)                NOT NULL COMMENT 'Имя книги',
@@ -22,15 +21,13 @@ export class CreateBooksTable1622385299560 implements MigrationInterface {
 			);
         `);
 
-        await queryRunner.query(`
+    await queryRunner.query(`
 			INSERT INTO books.books (name, pageCount, authorId, categoryId, type, publisherId, bookId, deletedAt) 
 			VALUES ('Exodus 2', 453, 1, 1, '1', 1, 1, null)
         `);
-    }
+  }
 
-
-    public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`DROP TABLE IF EXISTS authors;`)
-    }
-
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`DROP TABLE IF EXISTS authors;`);
+  }
 }

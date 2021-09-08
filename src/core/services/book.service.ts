@@ -1,18 +1,18 @@
 import "reflect-metadata";
 import { singleton } from "tsyringe";
 import { getRepository } from "typeorm";
-import {AuthorEntity, BookEntity, BookFields} from '../entities';
+import { BookEntity, BookFields } from "../entities";
 import { AuthorService } from "./author.service";
-import {BooksQB, FindAuthorsByParams, FindBooksByParams} from './query-builders';
-import {PublisherService} from './publisher.service'
+import { BooksQB, FindBooksByParams } from "./query-builders";
+import { PublisherService } from "./publisher.service";
 
 @singleton()
 export class BookService {
   private bookRepository = getRepository(BookEntity);
 
   constructor(
-      private authorService: AuthorService,
-      private publisherService: PublisherService,
+    private authorService: AuthorService,
+    private publisherService: PublisherService
   ) {}
 
   booksQB() {
@@ -43,7 +43,7 @@ export class BookService {
     }
 
     const publisher = this.publisherService.findOneBy({
-      publishersIds: [params.publisherId]
+      publishersIds: [params.publisherId],
     });
 
     if (!publisher) {

@@ -1,10 +1,20 @@
-import {AuthorEntity, BookEntity, CategoryEntity, CountryEntity, PublisherEntity} from '../../core/entities';
+import {
+  AuthorEntity,
+  BookEntity,
+  CategoryEntity,
+  CountryEntity,
+  PublisherEntity,
+} from "../../core/entities";
 import { NullableDataLoader } from "./utils";
-import {booksForAuthors, booksForCategories, booksForPublishers} from './books.dataloader';
+import {
+  booksForAuthors,
+  booksForCategories,
+  booksForPublishers,
+} from "./books.dataloader";
 import { author } from "./authors.dataloader";
-import { country } from './country.dataloader'
-import {publisher, publishersFromCountry} from './publisher.dataloader'
-import {category} from './category.dataloader'
+import { country } from "./country.dataloader";
+import { publisher, publishersFromCountry } from "./publisher.dataloader";
+import { category } from "./category.dataloader";
 
 export interface DataLoadersContext {
   dataLoaders: AppDataLoaders;

@@ -12,13 +12,13 @@ import {
   FieldResolver,
   Root,
   Ctx,
-} from 'type-graphql';
-import {BookEntity, BookFields } from '../../core/entities/book.entity';
+} from "type-graphql";
+import { BookEntity, BookFields } from "../../core/entities/book.entity";
 import { BookService } from "../../core/services/book.service";
 import { DataLoadersContext } from "../data-loaders";
 import { GqAuthor } from "./author.gq";
-import {GqPublisher} from './publisher.gq'
-import {GqCategory} from './category.gq'
+import { GqPublisher } from "./publisher.gq";
+import { GqCategory } from "./category.gq";
 
 @ObjectType({
   description: "Книга",
@@ -81,8 +81,8 @@ export class BookResolver {
     nullable: true,
   })
   async publisher(
-      @Root() book: GqBook,
-      @Ctx() { dataLoaders }: DataLoadersContext
+    @Root() book: GqBook,
+    @Ctx() { dataLoaders }: DataLoadersContext
   ): Promise<GqPublisher | null> {
     return dataLoaders.publisher.loadOrNull(book.publisherId);
   }
@@ -92,8 +92,8 @@ export class BookResolver {
     nullable: true,
   })
   async category(
-      @Root() book: GqBook,
-      @Ctx() { dataLoaders }: DataLoadersContext
+    @Root() book: GqBook,
+    @Ctx() { dataLoaders }: DataLoadersContext
   ): Promise<GqCategory | null> {
     return dataLoaders.category.loadOrNull(book.categoryId);
   }
