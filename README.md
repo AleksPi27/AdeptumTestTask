@@ -1,3 +1,17 @@
+Для запуска требуется докер (на нем вертится база данных) и yarn (для установки зависимостей)
+
+Далее для запуска проекта:
+docker-compose up --build (поднятие докера)
+yarn install (установка зависимостей)
+yarn typeorm migration:run (запуск миграций для наполнения БД)
+yarn start (старт бэка)
+
+Сервер запустится на http://localhost:28080
+
+После написания новых entities необходимо запустить генерацию новых миграций (в старые залезать категорически запрещено):
+yarn typeorm migration:generate -n "Название миграции"
+
+
 mutation createCountry {
   saveCountry(input: { name: "USA" }) {
     countryId
