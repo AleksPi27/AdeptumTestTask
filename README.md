@@ -1,7 +1,7 @@
 # Задача для теста:
 
-1. В query getBook в инпут добавить возможность фильтровки по publishersIds и categoriesIds\
-2. В query getAuthorsBooks добавить в ответ филдрезолвер booksCount, который выводит количество книг автора, используя dataloader\
+1. В query getBook в инпут добавить возможность фильтровки по publishersIds и categoriesIds
+2. В query getAuthorsBooks добавить в ответ филдрезолвер booksCount, который выводит количество книг автора, используя dataloader
 3. В query getBooksFromCategory добавить филдрезолвер books, который выводит список книг для категории, используя dataloader
 
 # Для запуска требуется докер (на нем вертится база данных) и yarn (для установки зависимостей)
