@@ -147,7 +147,10 @@ export abstract class AbstractQueryBuilder<Entity> {
     let fnArgs: Array<any> = [];
 
     if (fieldOrProperty) {
-      fnArgs = [`${this.alias}.${fieldOrProperty}`, aliasOrTableName];
+      fnArgs = [
+        `${this.alias}.${new String(fieldOrProperty)}`,
+        aliasOrTableName,
+      ];
       if (condition) {
         fnArgs.push(condition);
       }

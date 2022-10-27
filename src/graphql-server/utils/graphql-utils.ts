@@ -61,7 +61,7 @@ export function mappingNotNullResultForDataLoader<T>(
 
   return ids.map((id) => {
     const arr: T | T[] | null = _.get(map, id, null);
-    assert(arr, `Empty data for ${key}=${id}`);
+    assert(arr, `Empty data for ${new String(key)}=${id}`);
 
     return many ? arr : arr[0];
   });
