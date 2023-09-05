@@ -1,5 +1,6 @@
 import DataLoader, { BatchLoadFn, Options } from "dataloader";
 import md5 from "md5";
+import _ from "lodash";
 
 type BatchLoadFnWithPayload<K, V, P> = (
   keys: ReadonlyArray<K>,
@@ -29,6 +30,16 @@ export class NullableDataLoader<K, V, P = {}> extends DataLoader<K, V> {
     }
 
     return this.load(key);
+  }
+
+  async loadProperty<T>(key: K, property: string, defaultValue: T, payload?: P): Promise<T> {
+    if (payload) {
+      this.processPayload(payload);
+    }
+
+    const obj = await this.load(key);
+
+    return _.get(obj, property) || defaultValue;
   }
 
   async load(key: K, payload?: P): Promise<V> {

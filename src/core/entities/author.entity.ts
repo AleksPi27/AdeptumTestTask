@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
-import { ObjectType, Field, ID, InputType } from "type-graphql";
+import {ObjectType, Field, ID, InputType, Int} from "type-graphql";
 import { BookEntity } from "./book.entity";
 
 @InputType({ isAbstract: true })
@@ -41,6 +41,11 @@ export class AuthorEntity extends AuthorFields {
     unsigned: true,
   })
   authorId: number;
+
+  @Field(() => Int, {
+    description: "Количество книг автора",
+  })
+  booksCount: number;
 
   @OneToMany(() => BookEntity, (books) => books.author)
   books?: BookEntity[];

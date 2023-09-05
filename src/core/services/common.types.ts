@@ -17,3 +17,7 @@ export interface PublishersIds {
 export interface CategoriesIds {
   categoriesIds: ReadonlyArray<number>;
 }
+
+export interface AuthorId {
+  authorId: number;
+}

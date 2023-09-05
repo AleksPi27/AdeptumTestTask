@@ -36,6 +36,10 @@ class GqCreateBookInput extends BookFields {}
 class GqFindBookInput {
   @Field(() => [ID])
   booksIds: ReadonlyArray<number>;
+  @Field(() => [ID])
+  publishersIds: ReadonlyArray<number>;
+  @Field(() => [ID])
+  categoriesIds: ReadonlyArray<number>;
 }
 
 @singleton()

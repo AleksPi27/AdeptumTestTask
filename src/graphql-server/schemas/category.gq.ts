@@ -49,6 +49,17 @@ export class CategoryResolver {
     return this.categoryService.findOneBy(input);
   }
 
+  @FieldResolver(() => [GqBook], {
+    description: "Книги категории",
+    nullable: true,
+  })
+  async books(
+      @Root() category: GqCategory,
+      @Ctx() {dataLoaders}: DataLoadersContext
+  ):Promise<GqBook[] | null>{
+    return dataLoaders.booksForCategories.loadOrNull(category.categoryId);
+  }
+
   @Mutation(() => GqCategory, {
     description: "Добавить категорию",
   })

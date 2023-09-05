@@ -11,7 +11,7 @@ import {
   Field,
   FieldResolver,
   Root,
-  Ctx,
+  Ctx, Int,
 } from "type-graphql";
 import { AuthorEntity, AuthorFields } from "../../core/entities";
 import { AuthorService } from "../../core/services";
@@ -38,7 +38,7 @@ class GqFindAuthorInput {
 
 @singleton()
 @Resolver(() => GqAuthor)
-export class AuthorResolver {
+  export class AuthorResolver {
   constructor(private authorService: AuthorService) {}
 
   @Query(() => [GqAuthor], {
@@ -62,6 +62,17 @@ export class AuthorResolver {
   })
   saveAuthor(@Arg("input") input: GqCreateAuthorInput): Promise<GqAuthor> {
     return this.authorService.save(input);
+  }
+
+  @FieldResolver(() => Int, {
+    description: "Количество книг автора",
+    nullable: true,
+  })
+  async booksCount(
+    @Root() author: GqAuthor,
+    @Ctx() {dataLoaders}: DataLoadersContext
+  ): Promise<number> {
+    return await dataLoaders.booksForAuthors.loadProperty(author.authorId, "length", 0);
   }
 
   @FieldResolver(() => [GqBook], {
